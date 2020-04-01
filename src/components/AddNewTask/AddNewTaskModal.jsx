@@ -6,16 +6,12 @@ import { Select } from 'components/uiElements/Inputs/Select';
 import { TitleLayout } from 'components/uiElements/Inputs/TitleLayout';
 import { Modal } from 'components/CommonComponents/Modal/modal';
 import { TextArea } from 'components/uiElements/Inputs/TextArea';
+import { variables } from 'utils/variables';
 
 import Styled from './styled';
 
 export const AddNewTaskModal = ({ onClose, addTask }) => {
-  const selectArray = [
-    { name: 'ready', id: 2 },
-    { name: 'In progress', id: 3 },
-    { name: 'returned', id: 4 },
-    { name: 'in testing', id: 5 },
-  ];
+  const { statuses } = variables;
 
   const [title, setTitle] = useState();
   const [status, setStatus] = useState();
@@ -47,7 +43,7 @@ export const AddNewTaskModal = ({ onClose, addTask }) => {
         </TitleLayout>
         <TitleLayout title="Task status:">
           <Select
-            selectArray={selectArray}
+            selectArray={statuses}
             onChange={setStatus}
           />
         </TitleLayout>
