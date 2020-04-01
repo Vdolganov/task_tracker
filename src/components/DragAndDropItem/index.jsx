@@ -7,6 +7,7 @@ import history from '../../history';
 import { variables } from '../../utils/variables';
 
 const { textColor, primaryColor } = variables;
+const CONFIRM_MESSAGE = 'Are you sure?';
 
 const DragAndDropItem = ({
   name, id, dragStart, dragEnd, date, description, status, removeLocalTask,
@@ -55,6 +56,13 @@ const DragAndDropItem = ({
     history.push(`/task/${id}`);
   };
 
+  const onDeleteTask = () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(CONFIRM_MESSAGE)) {
+      removeLocalTask({ status, id });
+    }
+  };
+
   return (
     <div
       style={{
@@ -85,7 +93,7 @@ const DragAndDropItem = ({
           cursor: 'pointer', position: 'absolute', right: '5px', top: '5px',
         }}
       >
-        <MaterialIcon icon="close" onClick={() => removeLocalTask({ status, id })} />
+        <MaterialIcon icon="close" onClick={() => onDeleteTask()} />
       </span>
       <h4 style={{ margin: '0', color: textColor }}>{name}</h4>
       <p
