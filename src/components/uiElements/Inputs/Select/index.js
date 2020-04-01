@@ -1,0 +1,57 @@
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import Styled from './styled';
+import { SelectList } from './SelectList';
+import { SelectedElement } from './SelectedElement';
+
+export const Select = ({ selectArray, onChange, placeholder }) => {
+  const [listOpened, setListOpened] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const selectRef = useRef(null);
+
+  const onSelect = (index) => {
+    setListOpened(false);
+    if (index !== null) {
+      setSelectedIndex(index);
+      onChange(selectArray[index].id);
+    }
+  };
+  return (
+    <Styled.Select ref={selectRef}>
+      <SelectedElement onClick={() => { setListOpened(!listOpened); }} opened={listOpened}>
+        {selectedIndex !== null ? (
+          <span>
+            {' '}
+            {selectArray[selectedIndex].name}
+            {' '}
+          </span>
+        ) : (
+          <Styled.SelectPlaceholder>
+            { placeholder }
+          </Styled.SelectPlaceholder>
+        )}
+      </SelectedElement>
+      {
+                listOpened
+                && (
+                <SelectList
+                  selectedElement={selectedIndex}
+                  onSelect={onSelect}
+                  selectItems={selectArray}
+                  parentRef={selectRef}
+                />
+                )
+            }
+    </Styled.Select>
+  );
+};
+
+Select.defaultProps = {
+  placeholder: 'Select value',
+};
+
+Select.propTypes = {
+  selectArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
