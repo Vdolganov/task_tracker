@@ -12,6 +12,7 @@ const variables = {
   fontSizeRegular: '18px',
   fontSizeSmall: '14px',
   fontSizeSmaller: '10px',
+  primaryDark: '#000613',
   statuses,
 };
 

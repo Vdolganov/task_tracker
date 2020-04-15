@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { ReactTitle } from 'react-meta-tags';
 import { DragAndDropColumn } from '../components/DragAndDropColumn';
 import { moveTask } from '../store/boardData/actionCreaters';
-import AddNewTask from '../components/AddNewTask';
 
 const DragAndDrop = ({ data, moveTaskLocal }) => {
-  console.log(data)
   const [draggableItemId, setDraggableItemId] = useState(null);
   const [mainParentId, setParentId] = useState(null);
 
@@ -29,13 +27,19 @@ const DragAndDrop = ({ data, moveTaskLocal }) => {
 
   return (
     <div style={{
-      width: '1024px',
+      width: 'auto',
       margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
     }}
     >
       <ReactTitle title="Board" />
-      <AddNewTask />
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{
+        display: 'inline-flex', flexDirection: 'row', justifyContent: 'flex-start', width: 'auto',
+      }}
+      >
         {
                 data.map(
                   (item) => (

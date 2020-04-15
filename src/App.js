@@ -1,29 +1,15 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import ChartPage from 'pages/ChartPage';
+import { variables } from 'utils/variables';
 import DragAndDrop from './pages/DragAndDrop';
 import OneTaskPage from './pages/OneTask';
-
+import { SideNavigation } from './components';
 import './App.css';
 
-const linkStyle = {
-  color: '#000',
-  padding: '2px 5px',
-  border: '1px solid lightgray',
-  textDecoration: 'none',
-
-};
-
-const HeaderComponent = () => (
-  <header style={{ marginBottom: '10px', boxShadow: '1px 1px 6px lightgray', padding: '10px' }}>
-    <Link to="/" style={linkStyle}>Board</Link>
-    <Link to="/chart" style={linkStyle}>Chart</Link>
-  </header>
-);
-
 const MainComponent = () => (
-  <main>
+  <main style={{ width: '100%' }}>
     <Switch>
       <Route exact path="/" component={DragAndDrop} />
       <Route path="/task/:id" component={OneTaskPage} />
@@ -35,7 +21,7 @@ const MainComponent = () => (
 function App() {
   return (
     <div className="App">
-      <HeaderComponent />
+      <SideNavigation />
       <MainComponent />
     </div>
   );

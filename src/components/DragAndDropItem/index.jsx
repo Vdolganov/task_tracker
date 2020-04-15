@@ -29,7 +29,7 @@ const DragAndDropItem = ({
     };
   }, []);
 
-  const sliceText = (text, maxLength = 30) => (text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text);
+  const sliceText = (text, maxLength = 90) => (text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text);
 
   const onDragStart = () => {
     setTimeout(() => {
@@ -72,7 +72,7 @@ const DragAndDropItem = ({
         color: 'black',
         borderRadius: '4px',
         margin: '4px',
-        height: '150px',
+        height: '200px',
         userSelect: 'none',
         opacity: visible ? '1' : '0',
         transform: visible ? 'scale(1)' : 'scale(0.8)',
@@ -98,12 +98,12 @@ const DragAndDropItem = ({
       <h4 style={{ margin: '0', color: textColor }}>{name}</h4>
       <p
         style={{
-          margin: '0', color: textColor, fontSize: '13px', height: '80px',
+          margin: '0', color: textColor, fontSize: '13px', height: '120px',
         }}
         title={description}
       >
         {' '}
-        {sliceText(description, 75)}
+        {sliceText(description, 200)}
         {' '}
       </p>
       <span style={{ fontSize: '9px', color: 'rgba(23,41,56,0.9)' }}>{dateFormat(date)}</span>

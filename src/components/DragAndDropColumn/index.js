@@ -44,7 +44,7 @@ export const DragAndDropColumn = ({
   return (
     <div
       style={{
-        width: '160px',
+        width: '210px',
         transition: 'all 0.2s ease',
         background: dragOver ? 'rgba(82, 234, 255, 0.3)' : 'transparent',
         minHeight: `${window.innerHeight}px`,

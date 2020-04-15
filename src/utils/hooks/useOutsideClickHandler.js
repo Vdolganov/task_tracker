@@ -7,10 +7,21 @@ export const useOutsideClickHandler = (ref, outsideCallback) => {
     }
   }
 
+  const escClickListener = (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      outsideCallback();
+    }
+  };
+
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', escClickListener);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', escClickListener);
     };
   });
 };

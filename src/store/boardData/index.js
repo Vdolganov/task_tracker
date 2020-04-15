@@ -1,5 +1,7 @@
 import { actionTypes } from './actionTypes';
-import { moveTask, dataGenerator, addTask, deleteTask } from './helpers';
+import {
+  moveTask, dataGenerator, addTask, deleteTask,
+} from './helpers';
 
 const ACTION_HANDLERS = {
   [actionTypes.MOVE_TASK]:
