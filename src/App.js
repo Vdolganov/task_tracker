@@ -2,10 +2,9 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import ChartPage from 'pages/ChartPage';
-import { variables } from 'utils/variables';
 import DragAndDrop from './pages/DragAndDrop';
 import OneTaskPage from './pages/OneTask';
-import { SideNavigation } from './components';
+import { SideNavigation, ModalsLayout } from './components';
 import './App.css';
 
 const MainComponent = () => (
@@ -21,6 +20,7 @@ const MainComponent = () => (
 function App() {
   return (
     <div className="App">
+      <ModalsLayout />
       <SideNavigation />
       <MainComponent />
     </div>

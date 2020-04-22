@@ -1,13 +1,17 @@
 import React from 'react';
+import MaterialIcon from 'material-icons-react';
 import history from '../../../history';
+import Styled from './styled';
 
 const GoBack = () => (
-  <div style={{
-    width: '100%', background: '#fff', boxShadow: '1px 1px 4px gray', padding: '10px',
-  }}
-  >
-    <button onClick={() => { history.goBack(); }}>Go Back</button>
-  </div>
+  <Styled.GoBack>
+    <Styled.Button
+      type="button"
+      onClick={() => { history.goBack(); }}
+    >
+      <MaterialIcon icon="arrow_back" color="black" size="middle" />
+    </Styled.Button>
+  </Styled.GoBack>
 );
 
 export default GoBack;

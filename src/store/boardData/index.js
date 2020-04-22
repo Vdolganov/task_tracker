@@ -26,4 +26,5 @@ const initialState = {
   tasks: dataGenerator(),
 };
 
-export const boardData = (state = initialState, action) => (ACTION_HANDLERS[action.type] ? ACTION_HANDLERS[action.type](state, action) : state);
+export const boardData = (state = initialState, action) => (ACTION_HANDLERS[action.type]
+  ? ACTION_HANDLERS[action.type](state, action) : state);

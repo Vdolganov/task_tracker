@@ -11,6 +11,9 @@ border: 2px solid ${primaryColor};
 border-radius: 4px;
 width: 400px;
 position: relative;
+&:focus {
+outline: 2px solid darken(${primaryColor});
+}
 `;
 
 const SelectList = styled.ul`

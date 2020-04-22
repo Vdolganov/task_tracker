@@ -16,4 +16,15 @@ const variables = {
   statuses,
 };
 
-export { variables };
+const inputTypes = {
+  email: 'email',
+  text: 'text',
+  password: 'password',
+  select: 'select',
+  checkbox: 'checkbox',
+  textarea: 'textarea',
+  radio: 'radio',
+  range: 'range',
+}
+
+export { variables, inputTypes };

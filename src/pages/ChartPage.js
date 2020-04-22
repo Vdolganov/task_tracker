@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { Chart } from 'components/Chart';
+import { UniversalForm } from 'components';
 
 const ChartPage = () => (
   <div>
-    <Chart />
+    <UniversalForm />
   </div>
 );
 

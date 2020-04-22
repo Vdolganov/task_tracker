@@ -13,7 +13,7 @@ export const dataGenerator = () => {
       id: parentsNames[parent].id,
       children: [],
     };
-    for (let child = 0; child < 3; child++) {
+    for (let child = 0; child < 1; child++) {
       data[parent].children[child] = {
         name: `task${parent}${child}`, id: parent + child, taskDescription: `${loremIpsum} ${parent}${child}`, date: randomDate(new Date(2012, 0, 1), new Date()),
       };
