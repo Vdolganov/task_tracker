@@ -1,71 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Field } from 'formik';
 import {
-  TextField, TitleLayout, TextArea, Select,
+  TextField, TitleLayout, TextArea, Select, Input,
 } from 'components/uiElements';
 import { inputTypes } from 'utils/variables';
 
-const schema = {
-  fields: [
-    {
-      type: inputTypes.text,
-      name: 'Title',
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-        {
-          validationType: 'minLength',
-          value: 3,
-          errorMessage: 'Min length 3',
-        },
-      ],
-    },
-    {
-      type: inputTypes.select,
-      name: 'Task status',
-      options: [
-        { name: 'dick', id: 0 },
-        { name: 'vegana', id: 1 },
-      ],
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-      ],
-    },
-    {
-      type: inputTypes.range,
-      name: 'Fuck',
-      range: {
-        min: 0,
-        max: 100,
-      },
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-      ],
-    },
-  ],
-  buttons: [
-    { text: 'save', type: 'accept' },
-    { text: 'cancel', type: 'cancel' },
-  ],
-};
+import { inputDataWrapper } from 'components/HOC/inputDataWrapper';
 
 const componentByType = {
-  [inputTypes.email]: TextField,
-  [inputTypes.text]: TextField,
-  [inputTypes.password]: TextField,
-  [inputTypes.select]: Select,
-  [inputTypes.textarea]: TextArea,
-  [inputTypes.radio]: 'input',
-  [inputTypes.range]: 'input',
-  [inputTypes.checkbox]: 'input',
-
+  [inputTypes.email]: inputDataWrapper(TextField),
+  [inputTypes.text]: inputDataWrapper(TextField),
+  [inputTypes.password]: inputDataWrapper(TextField),
+  [inputTypes.select]: inputDataWrapper(Select),
+  [inputTypes.textarea]: inputDataWrapper(TextArea),
+  [inputTypes.radio]: inputDataWrapper(Input),
+  [inputTypes.range]: inputDataWrapper(Input),
+  [inputTypes.checkbox]: inputDataWrapper(Input),
 };
-
-const formatName = (str) => (typeof str === 'string' ? str.replace(/\s/g, '_').toLowerCase() : new Error());
 
 const getSuitableComponent = (type) => componentByType[type];
 
+const formatName = (str) => (typeof str === 'string' ? str.replace(/\s/g, '_').toLowerCase() : new Error());
 
-export const UniversalForm = () => {
+export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
   const [initialValues, setInitialValues] = useState(null);
 
   const convertInitialValues = (sch) => ((!sch.fields || !sch.fields.length) ? null
@@ -75,22 +32,30 @@ export const UniversalForm = () => {
     }, {}));
 
   useEffect(() => {
-    const initData = convertInitialValues(schema);
+    const initData = convertInitialValues(formSchema);
     setInitialValues(initData);
   }, []);
 
+  const generateButtons = () => ((formSchema.buttons && formSchema.buttons.length) ? formSchema.buttons.map((butt) => (
+    <button
+      type={butt.type === 'accept' ? 'submit' : 'button'}
+      onClick={
+                butt.type === 'cancel' ? onCancel : () => {}
+              }
+    >
+      {butt.text}
+
+    </button>
+  )) : false);
+
   return (
     <div>
-      <pre>
-        {JSON.stringify(initialValues)}
-      </pre>
       <Formik
         initialValues={{ ...initialValues }}
 
         onSubmit={(values, { setSubmitting }) => {
-          console.log('vvvvv', values);
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            onRealSubmit(values);
             setSubmitting(false);
           }, 400);
         }}
@@ -106,14 +71,15 @@ export const UniversalForm = () => {
           /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
-
             {
-                  schema.fields.map((field) => (
+                  formSchema.fields.map((field) => (
                     <TitleLayout
                       title={field.name}
                       error={errors.email && touched.email}
                       errorText={errors.email}
+                      key={field.name}
                     >
+
                       <Field
                         as={getSuitableComponent(field.type)}
                         type={field.type}
@@ -122,14 +88,14 @@ export const UniversalForm = () => {
                         min={(field && field.range && field.range.min) ? field.range.min : null}
                         max={(field && field.range && field.range.max) ? field.range.max : null}
                       />
+
                     </TitleLayout>
 
                   ))
               }
-
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+            {
+              generateButtons()
+            }
           </form>
         )}
       </Formik>

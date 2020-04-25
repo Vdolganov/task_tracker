@@ -5,7 +5,7 @@ import { SelectList } from './SelectList';
 import { SelectedElement } from './SelectedElement';
 
 export const Select = ({
-  selectArray, onChange, placeholder, name,
+  selectArray, onChange, placeholder,
 }) => {
   const [listOpened, setListOpened] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -15,14 +15,7 @@ export const Select = ({
     setListOpened(false);
     if (index !== null) {
       setSelectedIndex(index);
-      const event = {
-        target: {
-          value: selectArray[index].id,
-          type: 'change',
-          name,
-        },
-      };
-      onChange(event);
+      onChange(selectArray[index].id);
     }
   };
   return (

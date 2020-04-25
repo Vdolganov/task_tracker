@@ -3,3 +3,4 @@ export { Select } from './Inputs/Select';
 export { TextArea } from './Inputs/TextArea';
 export { TextField } from './Inputs/TextField';
 export { TitleLayout } from './Inputs/TitleLayout';
+export { Input } from './Inputs/Input';

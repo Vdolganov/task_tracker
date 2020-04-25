@@ -27,4 +27,4 @@ const inputTypes = {
   range: 'range',
 }
 
-export { variables, inputTypes };
+export { variables, inputTypes, statuses };

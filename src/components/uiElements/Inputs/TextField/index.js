@@ -6,7 +6,13 @@ export const TextField = ({
   onChange, placeholder, type, name,
 }) => (
   <Styled.TextField>
-    <Styled.TextFieldInput type={type} placeholder={placeholder} name={name} onChange={(e) => onChange(e)} />
+    <Styled.TextFieldInput
+      autoComplete="off"
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      onChange={(e) => onChange(e.target.value)}
+    />
   </Styled.TextField>
 );
 
