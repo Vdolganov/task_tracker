@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Field } from 'formik';
-import {
-  TextField, TitleLayout, TextArea, Select, Input,
-} from 'components/uiElements';
-import { inputTypes } from 'utils/variables';
+import * as Yup from 'yup';
+import { TitleLayout } from 'components/uiElements';
+import { componentByType } from 'components/UniversalForm/componentByType';
 
-import { inputDataWrapper } from 'components/HOC/inputDataWrapper';
-
-const componentByType = {
-  [inputTypes.email]: inputDataWrapper(TextField),
-  [inputTypes.text]: inputDataWrapper(TextField),
-  [inputTypes.password]: inputDataWrapper(TextField),
-  [inputTypes.select]: inputDataWrapper(Select),
-  [inputTypes.textarea]: inputDataWrapper(TextArea),
-  [inputTypes.radio]: inputDataWrapper(Input),
-  [inputTypes.range]: inputDataWrapper(Input),
-  [inputTypes.checkbox]: inputDataWrapper(Input),
-};
+const regExpContent = /\(([^)]+)\)/;
+const regExpAll = /\(([^}]+)\)+/g;
+const regExpEmpty = /\(()\)+/g;
 
 const getSuitableComponent = (type) => componentByType[type];
 
@@ -36,22 +26,58 @@ export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
     setInitialValues(initData);
   }, []);
 
-  const generateButtons = () => ((formSchema.buttons && formSchema.buttons.length) ? formSchema.buttons.map((butt) => (
-    <button
-      type={butt.type === 'accept' ? 'submit' : 'button'}
-      onClick={
+  const getStringWithoutParentheses = (str) => {
+    const clean = str.replace(regExpAll, '');
+    return clean.replace(regExpEmpty, '');
+  };
+
+  const generateValidationSchema = () => ((!formSchema.fields || !formSchema.fields.length) ? null
+    : formSchema.fields.reduce((accum, field) => {
+      if (field.validation) {
+        const validation = field.validation.split('.');
+        let obj = null;
+
+        validation.forEach((substr) => {
+          const matches = regExpContent.exec(substr);
+          let content = [];
+          if (matches && matches[1]) {
+            content = matches[1].split(',');
+            content.forEach((el) => el.trim());
+          }
+          const cleanMethodName = getStringWithoutParentheses(substr);
+
+          if (obj === null) {
+            obj = Yup;
+          }
+          obj = obj[cleanMethodName](...content);
+        });
+        accum[formatName(field.name)] = obj;
+      }
+      return accum;
+    }, {}));
+
+  const generateButtons = () => ((formSchema.buttons && formSchema.buttons.length)
+    ? formSchema.buttons.map((butt) => (
+      <button
+        type={butt.type === 'accept' ? 'submit' : 'button'}
+        onClick={
                 butt.type === 'cancel' ? onCancel : () => {}
               }
-    >
-      {butt.text}
+      >
+        {butt.text}
 
-    </button>
-  )) : false);
+      </button>
+    )) : false);
 
   return (
     <div>
       <Formik
         initialValues={{ ...initialValues }}
+        validationSchema={
+            Yup.object().shape({
+              ...generateValidationSchema(),
+            })
+        }
 
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -61,13 +87,13 @@ export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
         }}
       >
         {({
-          values,
           errors,
           touched,
-          handleChange,
-          handleBlur,
           handleSubmit,
+          formik,
           isSubmitting,
+          isValid,
+          dirty,
           /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
@@ -75,9 +101,9 @@ export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
                   formSchema.fields.map((field) => (
                     <TitleLayout
                       title={field.name}
-                      error={errors.email && touched.email}
-                      errorText={errors.email}
-                      key={field.name}
+                      error={errors[formatName(field.name)] && touched[formatName(field.name)]}
+                      errorText={errors[formatName(field.name)]}
+                      key={formatName(field.name)}
                     >
 
                       <Field
@@ -85,17 +111,15 @@ export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
                         type={field.type}
                         name={formatName(field.name)}
                         selectArray={field.options ? field.options : null}
-                        min={(field && field.range && field.range.min) ? field.range.min : null}
+                        min={(field && field.range && field.range.min
+                            !== undefined) ? field.range.min : null}
                         max={(field && field.range && field.range.max) ? field.range.max : null}
                       />
-
                     </TitleLayout>
 
                   ))
               }
-            {
-              generateButtons()
-            }
+            <button type="submit" disabled={!dirty || !isValid}>Save</button>
           </form>
         )}
       </Formik>

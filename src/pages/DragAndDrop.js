@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ReactTitle } from 'react-meta-tags';
-import { DragAndDropColumn } from '../components/DragAndDropColumn';
+import { DragAndDropColumn } from 'components/DragAndDropColumn';
 import { moveTask } from '../store/boardData/actionCreaters';
 
 const DragAndDrop = ({ data, moveTaskLocal }) => {

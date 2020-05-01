@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import Styled from './styled';
 
 export const TextField = ({
-  onChange, placeholder, type, name,
+  onChange, placeholder, type, name, onBlur,
 }) => (
   <Styled.TextField>
     <Styled.TextFieldInput
       autoComplete="off"
       type={type}
+      onBlur={onBlur}
       placeholder={placeholder}
       name={name}
       onChange={(e) => onChange(e.target.value)}
@@ -20,6 +21,7 @@ TextField.defaultProps = {
   placeholder: 'Input value...',
   type: 'text',
   name: '',
+  onBlur: () => {},
 };
 
 TextField.propTypes = {
@@ -27,4 +29,5 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
+  onBlur: PropTypes.func,
 };

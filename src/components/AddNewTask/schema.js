@@ -6,34 +6,18 @@ export const schema = {
     {
       type: inputTypes.text,
       name: 'Name',
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-        {
-          validationType: 'minLength',
-          value: 3,
-          errorMessage: 'Min length 3',
-        },
-      ],
+      validation: 'string().required().min(3)',
     },
     {
       type: inputTypes.select,
       name: 'Status',
       options: statuses,
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-      ],
+      validation: 'number().required()',
     },
     {
       type: inputTypes.textarea,
       name: 'Description',
-      validation: [
-        { validationType: 'required', errorMessage: 'Required' },
-        {
-          validationType: 'minLength',
-          value: 3,
-          errorMessage: 'Min length 3',
-        },
-      ],
+      validation: 'string().required().min(20)',
     },
   ],
   buttons: [

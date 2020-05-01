@@ -25,6 +25,7 @@ const inputTypes = {
   textarea: 'textarea',
   radio: 'radio',
   range: 'range',
+  datepicker: 'datepicker',
 }
 
 export { variables, inputTypes, statuses };

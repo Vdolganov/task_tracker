@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import Styled from './styled';
 
-export const TextArea = ({ onChange, placeholder, defaultValue }) => (
+export const TextArea = ({
+  onChange, placeholder, defaultValue, onBlur,
+}) => (
   <Styled.TextArea>
     <Styled.TextAreaWorkArea
+      onBlur={onBlur}
       defaultValue={defaultValue}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
@@ -16,10 +19,12 @@ export const TextArea = ({ onChange, placeholder, defaultValue }) => (
 TextArea.defaultProps = {
   placeholder: 'Enter value',
   defaultValue: '',
+  onBlur: () => {},
 };
 
 TextArea.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
+  onBlur: PropTypes.func,
 };

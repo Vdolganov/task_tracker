@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Styled from './styled';
 import { SelectList } from './SelectList';
 import { SelectedElement } from './SelectedElement';
 
 export const Select = ({
-  selectArray, onChange, placeholder,
+  selectArray, onChange, placeholder, onBlur,
 }) => {
   const [listOpened, setListOpened] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -18,18 +18,53 @@ export const Select = ({
       onChange(selectArray[index].id);
     }
   };
+
+  const triggerOpened = () => {
+    setListOpened(!listOpened);
+  };
+
+  const controlOpenOnEnterListener = (action) => {
+    switch (action) {
+      case 'set':
+        return selectRef.current.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            triggerOpened();
+          }
+        });
+      case 'remove':
+        return selectRef.current.removeEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            triggerOpened();
+          }
+        });
+      default:
+        return selectRef.current.removeEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            triggerOpened();
+          }
+        });
+    }
+  };
+
+  useEffect(() => selectRef.current.removeEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      triggerOpened();
+    }
+  }));
+
   return (
     <Styled.Select
       ref={selectRef}
       tabIndex="0"
       onFocus={() => {
-        if (!listOpened) {
-          setListOpened(true);
-        }
+        controlOpenOnEnterListener('set');
       }}
-      onBlur={() => setListOpened(false)}
+      onBlur={(e) => {
+        onBlur(e);
+        controlOpenOnEnterListener('remove');
+      }}
     >
-      <SelectedElement onClick={() => { setListOpened(!listOpened); }} opened={listOpened}>
+      <SelectedElement onClick={triggerOpened} opened={listOpened}>
         {selectedIndex !== null ? (
           <span>
             {' '}
@@ -60,6 +95,7 @@ export const Select = ({
 Select.defaultProps = {
   placeholder: 'Select value',
   name: '',
+  onBlur: () => {},
 };
 
 Select.propTypes = {
@@ -67,4 +103,5 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  onBlur: PropTypes.func,
 };

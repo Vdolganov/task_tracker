@@ -1,9 +1,9 @@
 import React from 'react';
 
 export const Input = ({
-  onChange, placeholder, type, name, max, min,
+  onChange, placeholder, type, name, max, min, onBlur
 }) => (
-  <input type={type} name={name} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} max={max} min={min} />
+  <input type={type} name={name} onBlur={onBlur} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} max={max} min={min} />
 );
 
 Input.defaultProps = {
