@@ -6,3 +6,8 @@ export { TitleLayout } from './Inputs/TitleLayout';
 export { Input } from './Inputs/Input';
 export { Range } from './Inputs/Range';
 export { Datepicker } from './Inputs/Datepicker';
+export { PageTitle } from './PageTitle';
+export { CheckBox } from './Inputs/CheckBox';
+export { Switch } from './Inputs/Switch';
+export { TopTaskControls } from './TopTaskControls';
+export { TextEditor } from './Inputs/TextEditor';

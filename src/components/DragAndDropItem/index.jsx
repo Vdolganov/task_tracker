@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import MaterialIcon from 'material-icons-react';
 import { deleteTask } from 'store/boardData/actionCreaters';
 import { connect } from 'react-redux';
+import parse from 'html-react-parser';
 import history from '../../history';
-import { variables } from '../../utils/variables';
+import { variables, statusesColors } from '../../utils/variables';
 
 const { textColor, primaryColor } = variables;
 const CONFIRM_MESSAGE = 'Are you sure?';
@@ -66,8 +67,7 @@ const DragAndDropItem = ({
   return (
     <div
       style={{
-        background: primaryColor,
-        boxShadow: pressed ? '1px 1px 6px gray' : '0 0 0 transparent',
+        boxShadow: pressed ? '2px 2px 5px lightgray' : '0px 0px 4px darkgray',
         transition: 'all 0.2s ease',
         color: 'black',
         borderRadius: '4px',
@@ -76,10 +76,8 @@ const DragAndDropItem = ({
         userSelect: 'none',
         opacity: visible ? '1' : '0',
         transform: visible ? 'scale(1)' : 'scale(0.8)',
-        padding: '14px',
         boxSizing: 'border-box',
         cursor: 'pointer',
-        border: '2px solid lightgray',
       }}
       onMouseDown={mouseDown}
       onMouseUp={mouseUp}
@@ -88,25 +86,29 @@ const DragAndDropItem = ({
       onDoubleClick={doubleClick}
       onDragEnd={onDragEnd}
     >
-      <span
-        style={{
-          cursor: 'pointer', position: 'absolute', right: '5px', top: '5px',
-        }}
-      >
-        <MaterialIcon icon="close" onClick={() => onDeleteTask()} />
-      </span>
-      <h4 style={{ margin: '0', color: textColor }}>{name}</h4>
-      <p
-        style={{
-          margin: '0', color: textColor, fontSize: '13px', height: '120px',
-        }}
-        title={description}
-      >
-        {' '}
-        {sliceText(description, 200)}
-        {' '}
-      </p>
-      <span style={{ fontSize: '9px', color: 'rgba(23,41,56,0.9)' }}>{dateFormat(date)}</span>
+      <div style={{ background: primaryColor, padding: '10px', borderRadius: '4px 4px 0 0' }}>
+        <span
+          style={{
+            cursor: 'pointer', position: 'absolute', right: '5px', top: '5px',
+          }}
+        >
+          <MaterialIcon icon="close" onClick={() => onDeleteTask()} />
+        </span>
+        <h4 style={{ margin: '0', color: textColor }}>{name}</h4>
+      </div>
+      <div style={{ padding: '5px 10px' }}>
+        <p
+          style={{
+            margin: '0', color: textColor, fontSize: '13px', height: '120px',
+          }}
+          title={parse(description)}
+        >
+          {' '}
+          {sliceText(parse(description), 200)}
+          {' '}
+        </p>
+        <span style={{ fontSize: '9px', color: 'rgba(23,41,56,0.9)' }}>{dateFormat(date)}</span>
+      </div>
     </div>
   );
 };

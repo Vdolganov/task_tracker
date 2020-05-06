@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import { TitleLayout } from 'components/uiElements';
+import { TitleLayout, PageTitle } from 'components/uiElements';
 import { componentByType } from 'components/UniversalForm/componentByType';
 
 const regExpContent = /\(([^)]+)\)/;
@@ -71,6 +71,7 @@ export const UniversalForm = ({ formSchema, onRealSubmit, onCancel }) => {
 
   return (
     <div>
+      {formSchema.formTitle && <PageTitle>{formSchema.formTitle}</PageTitle>}
       <Formik
         initialValues={{ ...initialValues }}
         validationSchema={

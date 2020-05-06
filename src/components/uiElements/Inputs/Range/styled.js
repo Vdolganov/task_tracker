@@ -25,8 +25,8 @@ height: 20px;
 `;
 
 const RangeActiveElement = styled.div`
-background: rgb(255,100,202);
-background: linear-gradient(90deg, rgba(255,100,202,1) 0%, rgba(78,0,142,1) 100%);
+background: rgba(255,100,202, 0.3);
+background: linear-gradient(90deg, rgba(255,100,202,0.3) 0%, rgba(78,0,142,0.7) 30%);
 width: ${(props) => props.actWidth}px;
 border-radius: 5px;
 height: 10px;

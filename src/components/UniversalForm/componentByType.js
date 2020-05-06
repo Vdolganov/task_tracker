@@ -1,7 +1,7 @@
 import { inputTypes } from 'utils/variables';
 import { inputDataWrapper } from 'components/HOC/inputDataWrapper';
 import {
-  TextField, Select, TextArea, Input, Range, Datepicker
+  TextField, Select, TextArea, Input, Range, Datepicker, CheckBox, Switch, TextEditor,
 } from 'components/uiElements';
 
 export const componentByType = {
@@ -12,6 +12,8 @@ export const componentByType = {
   [inputTypes.textarea]: inputDataWrapper(TextArea),
   [inputTypes.radio]: inputDataWrapper(Input),
   [inputTypes.range]: inputDataWrapper(Range),
-  [inputTypes.checkbox]: inputDataWrapper(Input),
+  [inputTypes.checkbox]: inputDataWrapper(CheckBox),
   [inputTypes.datepicker]: inputDataWrapper(Datepicker),
+  [inputTypes.switchControl]: inputDataWrapper(Switch),
+  [inputTypes.textEditor]: inputDataWrapper(TextEditor),
 };

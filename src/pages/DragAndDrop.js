@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ReactTitle } from 'react-meta-tags';
-import { DragAndDropColumn } from 'components/DragAndDropColumn';
+import { TopTaskControls } from 'components/uiElements/TopTaskControls';
+import { Kanban, SimpleMode } from 'components';
 import { moveTask } from '../store/boardData/actionCreaters';
 
-const DragAndDrop = ({ data, moveTaskLocal }) => {
+const DragAndDrop = ({ data, moveTaskLocal, simpleMode }) => {
   const [draggableItemId, setDraggableItemId] = useState(null);
   const [mainParentId, setParentId] = useState(null);
+
+  console.log(data, 'data')
 
   const onBring = (id) => {
     setParentId(id);
@@ -26,37 +28,20 @@ const DragAndDrop = ({ data, moveTaskLocal }) => {
   };
 
   return (
-    <div style={{
-      width: 'auto',
-      margin: '0 auto',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-    }}
-    >
-      <ReactTitle title="Board" />
-      <div style={{
-        display: 'inline-flex', flexDirection: 'row', justifyContent: 'flex-start', width: 'auto',
-      }}
-      >
-        {
-                data.map(
-                  (item) => (
-                    <DragAndDropColumn
-                      items={item.children}
-                      columnName={item.name}
-                      key={item.id}
-                      currentId={item.id}
-                      onLeave={onLeave}
-                      onBring={onBring}
-                      onEnd={onEnd}
-                      onMoveStart={onMoveStart}
-                    />
-                  ),
-                )
-            }
-      </div>
+    <div>
+      <TopTaskControls />
+      {
+        simpleMode ? <SimpleMode data={data} /> : (
+          <Kanban
+            data={data}
+            onBring={onBring}
+            onEnd={onEnd}
+            onLeave={onLeave}
+            onMoveStart={onMoveStart}
+          />
+        )
+
+      }
     </div>
   );
 };
@@ -68,6 +53,7 @@ DragAndDrop.propTypes = {
 
 const mapStateToProps = (state /* , ownProps */) => ({
   data: state.boardData.tasks,
+  simpleMode: state.controls.simple_mode,
 });
 
 const mapDispatchToProps = {

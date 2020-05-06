@@ -26,6 +26,19 @@ const inputTypes = {
   radio: 'radio',
   range: 'range',
   datepicker: 'datepicker',
-}
+  switchControl: 'switchControl',
+  textEditor: 'textEditor',
+};
 
-export { variables, inputTypes, statuses };
+const statusesColors = {
+  [statuses[0].id]: '#FF9AA2',
+  [statuses[1].id]: '#FFDAC1',
+  [statuses[2].id]: '#B5EAD7',
+  [statuses[3].id]: '#C7CEEA',
+  [statuses[4].id]: '#E2F0CB',
+  [statuses[5].id]: '#00FFB2',
+};
+
+export {
+  variables, inputTypes, statuses, statusesColors,
+};

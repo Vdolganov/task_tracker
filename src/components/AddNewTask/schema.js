@@ -2,6 +2,7 @@ import { inputTypes, statuses } from 'utils/variables';
 
 
 export const schema = {
+  formTitle: 'Add new task',
   fields: [
     {
       type: inputTypes.text,
@@ -15,7 +16,7 @@ export const schema = {
       validation: 'number().required()',
     },
     {
-      type: inputTypes.textarea,
+      type: inputTypes.textEditor,
       name: 'Description',
       validation: 'string().required().min(20)',
     },

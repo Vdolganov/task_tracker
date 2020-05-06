@@ -20,7 +20,7 @@ const schema = {
       },
     },
     {
-      type: inputTypes.textarea,
+      type: inputTypes.textEditor,
       name: 'Password',
       validation: 'string().required(that field is required)',
     },
@@ -53,6 +53,10 @@ const schema = {
         min: 0,
         max: 100,
       },
+    },
+    {
+      type: inputTypes.switchControl,
+      name: 'switchControl',
     },
   ],
   buttons: [
