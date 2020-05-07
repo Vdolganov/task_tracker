@@ -25,11 +25,11 @@ height: 20px;
 `;
 
 const RangeActiveElement = styled.div`
-background: rgba(255,100,202, 0.3);
-background: linear-gradient(90deg, rgba(255,100,202,0.3) 0%, rgba(78,0,142,0.7) 30%);
+background: #099abc;
 width: ${(props) => props.actWidth}px;
-border-radius: 5px;
+border-radius: 4px;
 height: 10px;
+box-shadow: 1px 1px 2px #2659bc;
 `;
 
 const RangeNumbersContainer = styled.div`

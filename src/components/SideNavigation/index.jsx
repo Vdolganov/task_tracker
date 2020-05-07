@@ -11,6 +11,7 @@ const MIcon = ({ icn, color = 'white', size = 'middle' }) => (
       icon={icn}
       color={color}
       size={size}
+      alt="test"
     />
   </>
 );

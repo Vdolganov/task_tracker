@@ -2,7 +2,8 @@ import { variables } from 'utils/variables';
 
 const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non tincidunt nibh. Aliquam quis ante libero. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ut nisi ac massa consectetur commodo a eget lorem. Integer nec dolor elit. Vivamus ut quam eget mauris pulvinar venenatis ac quis est. Sed quis semper tellus. Aenean arcu erat, interdum id nisi hendrerit, ornare semper nibh.';
 
-const randomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+const randomDate = (start, end) => new Date(start.getTime()
+    + Math.random() * (end.getTime() - start.getTime()));
 
 export const dataGenerator = () => {
   const data = [];
